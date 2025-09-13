@@ -1,0 +1,17 @@
+package academy.kata.service;
+
+import academy.kata.model.User;
+
+import java.util.List;
+
+public interface UserService {
+
+    List<User> getAllUsers();
+
+    void saveUser(User user);
+
+    void updateUser(int id, int age, String name, boolean haveCar);
+
+    void deleteUser(int id);
+
+}
