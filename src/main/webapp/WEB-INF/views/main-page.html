@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 20px;
+        }
+
+        h2, h3 {
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 30px;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: normal;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 90%;
+            padding: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="checkbox"] {
+            transform: scale(1.2);
+            margin-left: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        form {
+            display: inline-block;
+        }
+
+        .add-user-form {
+            max-width: 400px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .add-user-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .add-user-form input {
+            margin-bottom: 10px;
+        }
+    </style>
+
+</head>
+<body>
+<table>
+    <h2>Users Table</h2>
+    <tr>
+        <td>id</td>
+        <td>Name</td>
+        <td>Age</td>
+        <td>Has Car</td>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.age}"></td>
+        <td th:text="${user.hasCar}"></td>
+        <td>
+            <form th:action="@{/update-user}" method="post">
+                <input type="hidden" name="id" th:value="${user.id}" /><br>
+                <input type="text" name="name" th:value="${user.name}" required /><br>
+                <input type="number" name="age" th:value="${user.age}" required /><br>
+                <label>Has Car: <input type="checkbox" name="hasCar" th:checked="${user.hasCar}" /></label><br>
+                <button type="submit">Update</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/delete-user}" method="post">
+                <input type="hidden" name="id" th:value="${user.id}">
+                <button type="submit" name="id">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<h3>Add New User</h3>
+<form th:action="@{/add-user}" method="post" th:object="${newUser}">
+    <label>
+        Name: <input type="text" th:field="*{name}" required />
+    </label>
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    <br>
+    <label>
+        Age: <input type="number" th:field="*{age}" required />
+        <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
+    </label>
+    <br>
+    <label>Has Car: <input type="checkbox" th:field="*{hasCar}"/></label><br>
+    <button type="submit">Add User</button>
+</form>
+
+</body>
+</html>

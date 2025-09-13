@@ -28,9 +28,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void updateUser(int id, int age, String name, boolean haveCar) {
+    public void updateUser(int id, String name, int age, boolean haveCar) {
         entityManager
-                .createQuery("UPDATE User u SET u.age = :age, u.name = :name, u.haveCar = :haveCar WHERE u.id = :id", User.class)
+                .createQuery("UPDATE User u SET u.age = :age, u.name = :name, u.hasCar = :haveCar WHERE u.id = :id")
                 .setParameter("age", age)
                 .setParameter("name", name)
                 .setParameter("haveCar", haveCar)

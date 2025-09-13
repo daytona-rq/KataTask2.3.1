@@ -10,7 +10,7 @@ public interface UserService {
 
     void saveUser(User user);
 
-    void updateUser(int id, int age, String name, boolean haveCar);
+    void updateUser(int id, String name, int age, boolean haveCar);
 
     void deleteUser(int id);
 

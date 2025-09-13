@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(int id, int age, String name, boolean haveCar) {
-        userDao.updateUser(id, age, name, haveCar);
+    public void updateUser(int id, String name, int age, boolean haveCar) {
+        userDao.updateUser(id, name, age, haveCar);
     }
 
     @Override
