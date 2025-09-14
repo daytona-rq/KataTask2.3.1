@@ -25,40 +25,43 @@ public class UserController {
 
     @GetMapping("/")
     public String mainPage(Model model) {
-        if (userService.getAllUsers().isEmpty()) {
-            userService.saveUser(new User("John", 18, true));
-            userService.saveUser(new User("Danny", 15, false));
-            userService.saveUser(new User("Tom", 37, true));
-            userService.saveUser(new User("Jack", 23, false));
-        }
         model.addAttribute("users", userService.getAllUsers());
-        model.addAttribute("newUser", new User());
         return "main-page";
     }
 
-    @PostMapping("/add-user")
-    public String addUser(@Valid @ModelAttribute("newUser") User user, BindingResult bindingResult, Model model) {
+    @GetMapping("/add-user")
+    public String addUser(@ModelAttribute("user") User user) {
+        return "add-user";
+    }
+
+    @PostMapping("/create")
+    public String create(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("users", userService.getAllUsers());
-            return "main-page";
+            return "add-user";
         }
         userService.saveUser(user);
+        return "redirect:/";
+    }
+
+    @GetMapping("/edit-user")
+    public String updateUser(@RequestParam("id") int id, Model model) {
+        model.addAttribute("user", userService.getUserById(id).orElseThrow());
+        return "edit-user";
+    }
+
+    @PostMapping("/edit-user")
+    public String edit(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, @RequestParam int id) {
+        user.setId(id);
+        if (bindingResult.hasErrors()) {
+            return "edit-user";
+        }
+        userService.updateUser(id, user);
         return "redirect:/";
     }
 
     @PostMapping("/delete-user")
     public String deleteUser(@RequestParam int id) {
         userService.deleteUser(id);
-        return "redirect:/";
-    }
-
-    @PostMapping("/update-user")
-    public String updateUser(
-            @RequestParam int id,
-            @RequestParam String name,
-            @RequestParam int age,
-            @RequestParam(defaultValue = "false") boolean hasCar) {
-        userService.updateUser(id, name, age, hasCar);
         return "redirect:/";
     }
 

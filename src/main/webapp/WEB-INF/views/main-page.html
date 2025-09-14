@@ -21,7 +21,7 @@
             max-width: 800px;
             margin-bottom: 30px;
             background-color: #fff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         th, td {
@@ -71,14 +71,6 @@
             display: inline-block;
         }
 
-        .add-user-form {
-            max-width: 400px;
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
         .add-user-form label {
             display: block;
             margin-bottom: 8px;
@@ -91,8 +83,8 @@
 
 </head>
 <body>
+<h3>Users Table</h3>
 <table>
-    <h2>Users Table</h2>
     <tr>
         <td>id</td>
         <td>Name</td>
@@ -105,12 +97,9 @@
         <td th:text="${user.age}"></td>
         <td th:text="${user.hasCar}"></td>
         <td>
-            <form th:action="@{/update-user}" method="post">
-                <input type="hidden" name="id" th:value="${user.id}" /><br>
-                <input type="text" name="name" th:value="${user.name}" required /><br>
-                <input type="number" name="age" th:value="${user.age}" required /><br>
-                <label>Has Car: <input type="checkbox" name="hasCar" th:checked="${user.hasCar}" /></label><br>
-                <button type="submit">Update</button>
+            <form th:action="@{/edit-user}" method="get">
+                <input type="hidden" name="id" th:value="${user.id}"/>
+                <button th:type="submit">Edit User</button>
             </form>
         </td>
         <td>
@@ -122,19 +111,7 @@
     </tr>
 </table>
 
-<h3>Add New User</h3>
-<form th:action="@{/add-user}" method="post" th:object="${newUser}">
-    <label>
-        Name: <input type="text" th:field="*{name}" required />
-    </label>
-    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-    <br>
-    <label>
-        Age: <input type="number" th:field="*{age}" required />
-        <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
-    </label>
-    <br>
-    <label>Has Car: <input type="checkbox" th:field="*{hasCar}"/></label><br>
+<form th:action="@{/add-user}" method="get">
     <button type="submit">Add User</button>
 </form>
 

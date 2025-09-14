@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,6 +16,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    @Override
+    public Optional<User> getUserById(int id) {
+        return userDao.getUserById(id);
     }
 
     @Override
@@ -28,14 +34,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(int id, String name, int age, boolean haveCar) {
-        userDao.updateUser(id, name, age, haveCar);
+    public void updateUser(int id, User userToEdit) {
+        userDao.updateUser(id, userToEdit);
     }
 
     @Override
     public void deleteUser(int id) {
         userDao.deleteUser(id);
     }
-
 
 }

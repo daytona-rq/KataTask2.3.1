@@ -1,6 +1,6 @@
 package academy.kata.model;
 
-import Utils.Text;
+import academy.kata.Utils.Text;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +14,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
 
 
 @AllArgsConstructor
@@ -45,6 +44,10 @@ public class User {
         this.name = name;
         this.age = age;
         this.hasCar = hasCar;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {
