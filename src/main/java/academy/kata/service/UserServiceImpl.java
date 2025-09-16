@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,18 +19,11 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    Optional<User> hasRecordById(int id) {
-        Optional<User> user = userDao.getUserById(id);
-        if (user.isEmpty()) {
-            throw new EntityNotFoundException("User with id " + id + " not found");
-        }
-        return user;
-    }
-
     @Transactional(readOnly = true)
     @Override
-    public Optional<User> getUserById(int id) {
-        return hasRecordById(id);
+    public User getUserById(int id) {
+        return userDao.getUserById(id)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional(readOnly = true)
@@ -49,14 +41,14 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void updateUser(int id, User userToEdit) {
-        hasRecordById(id);
+        getUserById(id);
         userDao.updateUser(id, userToEdit);
     }
 
     @Transactional
     @Override
     public void deleteUser(int id) {
-        hasRecordById(id);
+        getUserById(id);
         userDao.deleteUser(id);
     }
 
