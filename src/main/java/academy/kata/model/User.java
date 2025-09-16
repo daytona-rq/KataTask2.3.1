@@ -1,6 +1,6 @@
 package academy.kata.model;
 
-import academy.kata.Utils.Text;
+import academy.kata.utils.ValidationTexts;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -27,13 +27,13 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @NotBlank(message = Text.validationNameNotBlank)
-    @Size(min = 2, max = 50, message = Text.validationNameLength)
+    @NotBlank(message = ValidationTexts.NOT_BLANK)
+    @Size(min = 2, max = 50, message = ValidationTexts.INCORRECT_NAME_LENGTH)
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Min(value = 0, message = Text.validationAgeNotInRange)
-    @Max(value = 150, message = Text.validationAgeNotInRange)
+    @Min(value = 0, message = ValidationTexts.NAME_NOT_IN_RANGE)
+    @Max(value = 150, message = ValidationTexts.NAME_NOT_IN_RANGE)
     @Column(name = "age", nullable = false)
     private int age;
 
